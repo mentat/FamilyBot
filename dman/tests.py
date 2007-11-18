@@ -11,3 +11,8 @@ class ManagerTest(TestCase):
 		Person.objects.create(name='Jane', gender='F', father=tim)
 		
 		self.assertEqual(tim.children().count(), 2)
+		
+		kim = Person.objects.create(name="Kim", gender='F')
+		kim.spouses.add(tim)
+		
+		self.assertEqual(tim in kim.spouses.all(), True)

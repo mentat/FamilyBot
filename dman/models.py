@@ -15,7 +15,7 @@ class Person(models.Model):
 	father = models.ForeignKey('self', blank=True, null=True, related_name='paternal')
 	gender = models.CharField(maxlength=1, choices = GENDER, db_index=True)
 	
-	spouse = models.ManyToManyField('self', null=True, related_name="spouses")
+	spouses = models.ManyToManyField('self', null=True, related_name="spouses")
 	
 	objects = PersonManager()
 	
