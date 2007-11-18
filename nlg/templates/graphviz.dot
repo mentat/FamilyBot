@@ -1,0 +1,11 @@
+digraph children {% templatetag openbrace %}
+	{% for child in response.result %}
+	{% if child.gender=='M'}
+	{{child.title}} = [style=filled fillcolor="#80C9FF" fontcolor=white]
+	{% endif %}
+	{% else %}
+	{{child.title}} = [style=filled fillcolor="#FF80B8" fontcolor=white]
+	{% endelse %}
+	{{response.subject.title}} -> {{child.title}};
+	{% endfor %}
+	{% templatetag closebrace %}

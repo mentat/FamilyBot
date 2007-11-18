@@ -1,4 +1,5 @@
 import simplejson, re
+from django.shortcuts import render_to_response
 
 def _processChildrenTemplate(response):
 	template = "NAME has the children CHILD"
@@ -7,6 +8,8 @@ def _processChildrenTemplate(response):
 	childList = ", ".join([x['title'] for x in response["result"]])
 	children = re.compile(r'CHILD')
 	template = children.sub(childList,template)
+	graphviz = render_to_response("graphviz.dot", {"response":response})
+	print graphviz
 	return template
 
 TEMPLATES = { 
