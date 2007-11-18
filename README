@@ -1,0 +1,20 @@
+{
+	'actions': [
+		{
+			'type':'output',
+			'action':'children',
+			'subject': {'id':1234, 'title':'mike'},
+			'result': [
+				{'id':333, 'title':'ann'}, {'id':334,'title':'jimmy'}
+		},
+		{
+			'type':'context',
+			'action':'children',
+			'subject': {'id':1234, 'title':'mike'},
+			'result':[
+				{'id':333, 'title':'ann', 'parent':1234},
+				{'id':334,'title':'jimmy','parent':1234}
+			]
+		}
+	]
+}
