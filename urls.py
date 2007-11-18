@@ -7,5 +7,5 @@ urlpatterns = patterns('',
     # Uncomment this for admin:
 #     (r'^admin/', include('django.contrib.admin.urls')),
 
-	(r'^test/', 'nlg.views.test')
+	(r'^generate/', 'nlg.views.generate')
 )

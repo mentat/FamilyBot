@@ -1,7 +1,10 @@
 # Create your views here.
-import simplejson
-
+import simplejson, re
+from familybot.nlg.language_templates import *
 from django.http import HttpResponse
-def test(request):
-	x = simplejson.loads(request["payload"])
-	return HttpResponse(x['hi'])
+
+def generate(request):
+	languageResponse = simplejson.loads(request["payload"])
+	response = TEMPLATES[languageResponse["actions"][0]["action"]](languageResponse["actions"][0])
+	return HttpResponse(response)
+	
