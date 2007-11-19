@@ -3,14 +3,22 @@ from django.shortcuts import render_to_response
 from django.http import HttpResponse, Http404
 from django.core.cache import cache
 
-import phoenix
-import os, md5, commands
+import phoenix, simplejson
+import os, md5, commands, pprint
 from tempfile import mkstemp
 
 def generate_graphviz(graph):
-	return """
-	digraph test { one -> two; one -> three; three->four; }
-	"""
+	dotput = "digraph test { \n"
+	for parse in graph:
+		framenum = 0
+		for frame in parse:
+			dotput += "%s -> FRAME%d;\n" % (frame['name'], framenum)
+			for node in frame['nodes']:	
+				dotput += "FRAME%d -> %s;\n" % (framenum, node['name'][0])
+				dotput += "%s -> %s;\n" % (node['name'][0], node['value'])
+			framenum += 1
+	dotput += "}"
+	return dotput
 
 def graph(request, key):
 	graph = cache.get(key)
@@ -44,4 +52,6 @@ def ask(request):
 		key = md5.new(question).hexdigest()
 		parse = phoenix.parse(question)
 		cache.set(key, parse, 60*60)
-		return render_to_response('ask.html', {'message':parse, 'key':key})
+		return render_to_response('ask.html', 
+			{'message':pprint.pformat(parse), 'key':key, 'question':request.POST.get('question','')}
+		)

@@ -2,12 +2,12 @@
 <head><title>Ask me a question</title></head>
 <body>
 	{% if message %}
-	<pre style="background:gray;">{{message}}</pre>
-	<img align="right" src="/nlu/graphic/{{key}}/"/>
+	<pre style="background:gray;">{{message}}</pre><br/>
+	<img align="center" src="/nlu/graphic/{{key}}/"/>
 	{% endif %}
 	<form action="/nlu/" method="post">
 		<label>Ask me a question<br/>
-			<textarea cols="50" rows="5" name="question"></textarea>
+			<textarea cols="50" rows="5" name="question">{{question}}</textarea>
 		</label><br/>
 		<input type="submit" value="Ask!"/>
 	</form>
