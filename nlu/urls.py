@@ -1,5 +1,6 @@
 from django.conf.urls.defaults import *
 
 urlpatterns = patterns('',
-	(r'^$', 'nlu.views.ask')
+	(r'^$', 'nlu.views.ask'),
+	(r'^graphic/(?P<key>.+)/$', 'nlu.views.graph')
 )
