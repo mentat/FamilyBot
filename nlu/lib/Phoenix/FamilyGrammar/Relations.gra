@@ -1,0 +1,31 @@
+[who_subject]
+	(*of [Person_Name])
+;
+[how_related]
+	(who *IS *the [Relation_Type])
+IS
+	(is)
+	(was)
+;
+[Relation_Type]
+	(great grand father)
+	(great grand mother)
+	(grand mother)
+	(grand father)
+	(step brother)
+	(step sister)
+	(step father)
+	(step mother)
+	(mother)
+	(father)
+	(sister)
+	(brother)
+	(nephew)
+	(niece)
+	(cousin)
+	(uncle)
+	(aunt)
+;
+[Person_Name]
+#include names
+;
