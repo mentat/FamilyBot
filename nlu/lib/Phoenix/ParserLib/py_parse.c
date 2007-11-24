@@ -23,15 +23,16 @@ static int	utt_num = 0;
 
 static PyObject *phoenix_parse(PyObject *self, PyObject *args)
 {
-	char grammar_tmp[] = "EX.net";
-	grammar_file = malloc(strlen(grammar_tmp)+1);
-	strcpy(grammar_file,grammar_tmp);
 	const char * line;
 	const char * dir;
+	const char * grammar_tmp;
 	
-	if (!PyArg_ParseTuple(args, "ss", &line, &dir)) {
+	if (!PyArg_ParseTuple(args, "sss", &line, &dir, &grammar_tmp)) {
 		return (PyObject*)NULL;
 	}
+	grammar_file = malloc(strlen(grammar_tmp)+1);
+	strcpy(grammar_file,grammar_tmp);
+	
 	strip_line(line);
 	
 	init_parse(dir, dict_file, grammar_file, frames_file, priority_file);
@@ -62,6 +63,7 @@ static PyObject *phoenix_parse(PyObject *self, PyObject *args)
 	    	print_parse(0, out_ptr, extract, gram);
 	    	out_ptr += strlen(out_ptr);
 	}
+	printf(outbuf);
 	//sprintf(out_ptr, "\n");
 	out_ptr += strlen(out_ptr);
 	free(grammar_file);

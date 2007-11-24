@@ -9,7 +9,7 @@
 
 set TASK="EX"
 set LIBS="date_time.gra number.gra next.gra"
-set PHOENIX="../../../Phoenix"
+set PHOENIX="../../Phoenix"
 @ SingleFile = 0
 
 set DIR=`pwd`

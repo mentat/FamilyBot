@@ -2,8 +2,8 @@ import phoenix_driver, re
 
 FRAME_NAME = re.compile(r'^([A-Za-z]+):\[')
 
-def parse(strg, dir="Grammar"):
-	p_parse = phoenix_driver.parse(strg, dir)
+def parse(strg, dir="Grammar", net="EX.net"):
+	p_parse = phoenix_driver.parse(strg, dir, net)
 	parses = list()
 	current_parse = list()
 	for line in p_parse.split("\n"):

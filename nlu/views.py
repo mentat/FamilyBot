@@ -12,13 +12,13 @@ def generate_graphviz(graph):
 	for parse in graph:
 		framenum = 0
 		for frame in parse:
-			dotput += "%s -> FRAME%d;\n" % (frame['name'], framenum)
+			dotput += "%s -> %s%d;\n" % (frame['name'], frame['name'], framenum)
 			for node in frame['nodes']:
 				if len(node['name']) > 0:
-					dotput += "FRAME%d -> %s;\n" % (framenum, node['name'][0])
+					dotput += "%s%d -> %s;\n" % (frame['name'], framenum, node['name'][0])
 					dotput += "%s -> %s;\n" % (node['name'][0], node['value'])
 				else:
-					dotput += "FRAME%d -> %s;\n" % (framenum, node['value'])
+					dotput += "%s%d -> %s;\n" % (frame['name'], framenum, node['value'])
 			framenum += 1
 	dotput += "}"
 	return dotput
@@ -53,8 +53,9 @@ def ask(request):
 	else:
 		question = request.POST.get('question')
 		key = md5.new(question).hexdigest()
-		parse = phoenix.parse(question, dir="nlu/lib/Grammar")
+		parse = phoenix.parse(question, dir="nlu/lib/Phoenix/FamilyGrammar", net="REL.net")
 		cache.set(key, parse, 60*60)
+		print pprint.pformat(parse)
 		return render_to_response('ask.html', 
 			{'message':pprint.pformat(parse), 'key':key, 'question':request.POST.get('question','')}
 		)
