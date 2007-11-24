@@ -1,0 +1,6 @@
+# Relations
+    FRAME: Relation
+    NETS:
+	[how_related]
+	[who_subject]
+;
