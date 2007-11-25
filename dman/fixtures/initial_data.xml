@@ -236,5 +236,107 @@
 			<object pk="32"></object>
 		</field>
 	</object>
-	
+	<!-- sons of Abraham -->
+	<object pk="35" model="dman.Person">
+		<field type="CharField" name="name">Issac</field>
+		<field type="ForeignKey" name="mother">33</field>
+		<field type="ForeignKey" name="father">32</field>
+		<field type="CharField" name="gender">M</field>
+	</object>
+	<object pk="36" model="dman.Person">
+		<field type="CharField" name="name">Ishmael</field>
+		<field type="ForeignKey" name="mother">34</field>
+		<field type="ForeignKey" name="father">32</field>
+		<field type="CharField" name="gender">M</field>
+	</object>
+	<object pk="37" model="dman.Person">
+		<field type="CharField" name="name">Zimran</field>
+		<field type="ForeignKey" name="mother">34</field>
+		<field type="ForeignKey" name="father">32</field>
+		<field type="CharField" name="gender">M</field>
+	</object>
+	<object pk="38" model="dman.Person">
+		<field type="CharField" name="name">Medan</field>
+		<field type="ForeignKey" name="mother">34</field>
+		<field type="ForeignKey" name="father">32</field>
+		<field type="CharField" name="gender">M</field>
+	</object>
+	<object pk="39" model="dman.Person">
+		<field type="CharField" name="name">Ishbak</field>
+		<field type="ForeignKey" name="mother">34</field>
+		<field type="ForeignKey" name="father">32</field>
+		<field type="CharField" name="gender">M</field>
+	</object>
+	<object pk="40" model="dman.Person">
+		<field type="CharField" name="name">Jokshan</field>
+		<field type="ForeignKey" name="mother">34</field>
+		<field type="ForeignKey" name="father">32</field>
+		<field type="CharField" name="gender">M</field>
+	</object>
+	<object pk="41" model="dman.Person">
+		<field type="CharField" name="name">Midian</field>
+		<field type="ForeignKey" name="mother">34</field>
+		<field type="ForeignKey" name="father">32</field>
+		<field type="CharField" name="gender">M</field>
+	</object>
+	<object pk="42" model="dman.Person">
+		<field type="CharField" name="name">Shuah</field>
+		<field type="ForeignKey" name="mother">34</field>
+		<field type="ForeignKey" name="father">32</field>
+		<field type="CharField" name="gender">M</field>
+	</object>
+	<!-- Rebekah's father & brother -->
+	<object pk="47" model="dman.Person">
+		<field type="CharField" name="name">Bethuel</field>
+		<field type="ForeignKey" name="mother"><None></None></field>
+		<field type="ForeignKey" name="father"><None></None></field>
+		<field type="CharField" name="gender">M</field>
+	</object>
+	<object pk="43" model="dman.Person">
+		<field type="CharField" name="name">Rebekah</field>
+		<field type="ForeignKey" name="mother"><None></None></field>
+		<field type="ForeignKey" name="father">47</field>
+		<field type="CharField" name="gender">F</field>
+		<field to="dman.Person" name="spouses" rel="ManyToManyRel">
+			<object pk="35"></object>
+		</field>
+	</object>
+	<object pk="48" model="dman.Person">
+		<field type="CharField" name="name">Laban</field>
+		<field type="ForeignKey" name="mother"><None></None></field>
+		<field type="ForeignKey" name="father">47</field>
+		<field type="CharField" name="gender">M</field>
+	</object>
+	<!-- sons of Issac (35) & Rebekah (43) -->
+	<object pk="44" model="dman.Person">
+		<field type="CharField" name="name">Jacob</field>
+		<field type="ForeignKey" name="mother">43</field>
+		<field type="ForeignKey" name="father">35</field>
+		<field type="CharField" name="gender">M</field>
+	</object>
+	<object pk="45" model="dman.Person">
+		<field type="CharField" name="name">Esau</field>
+		<field type="ForeignKey" name="mother">43</field>
+		<field type="ForeignKey" name="father">35</field>
+		<field type="CharField" name="gender">M</field>
+	</object>
+	<!-- wives of Jacob -->
+	<object pk="46" model="dman.Person">
+		<field type="CharField" name="name">Leah</field>
+		<field type="ForeignKey" name="mother"><None></None></field>
+		<field type="ForeignKey" name="father">47</field>
+		<field type="CharField" name="gender">M</field>
+		<field to="dman.Person" name="spouses" rel="ManyToManyRel">
+			<object pk="44"></object>
+		</field>
+	</object>
+	<object pk="49" model="dman.Person">
+		<field type="CharField" name="name">Rachael</field>
+		<field type="ForeignKey" name="mother"><None></None></field>
+		<field type="ForeignKey" name="father">47</field>
+		<field type="CharField" name="gender">M</field>
+		<field to="dman.Person" name="spouses" rel="ManyToManyRel">
+			<object pk="44"></object>
+		</field>
+	</object>
 </django-objects>

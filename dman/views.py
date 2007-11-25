@@ -77,7 +77,7 @@ def understand_relation(parse):
 	return get_data(operator, values, relation)
 		
 def get_data(operator, values, relation):
-	
+	" Get the data for the response based on relation, subject, and op. "
 	# Build list of subjects
 	subject = Person.objects.none()
 	for val in values['Person_Name']:
@@ -97,8 +97,13 @@ def get_data(operator, values, relation):
 	elif relation.startswith('child'):
 		data = subject[0].children()
 	elif relation.find('grand') != -1 or relation.find('great') != -1:
+		# handle grands/greats
 		greats = relation.count('grand') + relation.count('great') + 1
-		data = get_greats(list(subject), greats, Person.children)
+		if relation.find('child') != -1 or relation.find('son') != -1:
+			data = get_greats(list(subject), greats, Person.children)
+		elif relation.find('father') != -1 or relation.find('dad') != -1:
+			data = get_greats(list(subject), greats, Person.fathers)
+			
 	elif relation.startswith('son'):
 		data = Person.objects.filter(id__in=reduce(
 			lambda x,y: operator(x, y),
@@ -107,7 +112,9 @@ def get_data(operator, values, relation):
 	elif relation.startswith('brother'):
 		data = set(x['id'] for x in subject[0].father.sons().values('id')) - set([x.id for x in subject])
 		data = Person.objects.filter(id__in=data)
-		
+	elif relation.startswith('sister'):
+		data = set(x['id'] for x in subject[0].father.daughters().values('id')) - set([x.id for x in subject])
+		data = Person.objects.filter(id__in=data)	
 	elif relation.startswith('daughter'):
 		data = subject[0].daughters()
 	else:
@@ -120,7 +127,6 @@ def get_data(operator, values, relation):
 	
 def load(request, subject, relation):
 	# A more direct inferface to the DMAN
-	
 	return get_data(set.intersection, {'Person_Name':[subject]}, relation)
 	
 def understand(request):

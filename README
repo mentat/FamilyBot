@@ -5,15 +5,41 @@
 			'action':'children',
 			'subject': {'id':1234, 'title':'mike'},
 			'result': [
-				{'id':333, 'title':'ann'}, {'id':334,'title':'jimmy'}
+				{'id':333, 'title':'ann', 'gender':'F'},
+				{'id':334, 'title':'jimmy', 'gender':'M'}
+			]
+		},
+		{
+			'type':'output',
+			'action':'father',
+			'subject': {'id':1234, 'title':'mike'},
+			'result': [
+				{'id':334, 'title':'jimmy', 'gender':'M'}
+			]
+		},
+		{
+			'type':'output',
+			'action':'mother',
+			'subject': {'id':1234, 'title':'mike'},
+			'result': [
+				{'id':334, 'title':'ann', 'gender':'F'}
+			]
+		},
+		{
+			'type':'output',
+			'action':'father',
+			'subject': {'id':1234, 'title':'mike'},
+			'result': [
+				{'id':334, 'title':'jimmy', 'gender':'M'}
+			]
 		},
 		{
 			'type':'context',
 			'action':'children',
 			'subject': {'id':1234, 'title':'mike'},
 			'result':[
-				{'id':333, 'title':'ann', 'parent':1234},
-				{'id':334,'title':'jimmy','parent':1234}
+				{'id':333, 'title':'ann', 'parent':1234, 'spouse':[33], 'gender':'F'},
+				{'id':334, 'title':'jimmy','parent':1234, 'spouse':[34,45], 'gender':'M'}
 			]
 		}
 	]

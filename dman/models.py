@@ -19,6 +19,11 @@ class Person(models.Model):
 	
 	objects = PersonManager()
 	
+	def fathers(self):
+		if self.father is not None:
+			return [self.father]
+		return []
+	
 	def children(self):
 		# Find all the children of a person
 		if self.gender=='M':
