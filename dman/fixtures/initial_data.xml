@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<django-objects version="1.0">
+	<object pk="1" model="dman.Person">
+		<field type="CharField" name="name">Adam</field>
+		<field type="CharField" name="gender">M</field>
+	</object>
+	<object pk="2" model="dman.Person">
+		<field type="CharField" name="name">Eve</field>
+		<field type="CharField" name="gender">F</field>
+	</object>
+	<object pk="3" model="dman.Person">
+		<field type="CharField" name="name">Cain</field>
+		<field type="CharField" name="gender">M</field>
+		<field type="ForeignKey" name="mother">2</field>
+		<field type="ForeignKey" name="father">1</field>
+	</object>
+	<object pk="4" model="dman.Person">
+		<field type="CharField" name="name">Abel</field>
+		<field type="ForeignKey" name="mother">2</field>
+		<field type="ForeignKey" name="father">1</field>
+		<field type="CharField" name="gender">M</field>
+	</object>
+</django-objects>

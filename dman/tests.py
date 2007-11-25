@@ -16,3 +16,21 @@ class ManagerTest(TestCase):
 		kim.spouses.add(tim)
 		
 		self.assertEqual(tim in kim.spouses.all(), True)
+		
+	def testUnderstanding(self):
+		
+		import simplejson
+		
+		payload = simplejson.dumps([
+			[
+				{'name': 'Relation', 'nodes': [
+					{'name': ['Relation_Type'], 'value': 'SISTER'}
+				]},
+		  		{'nodes': [
+					{'name': ['Person_Name'], 'value': 'CAIN'}
+				], 'name': 'Relation'}
+			]
+		])
+		print payload
+		client = Client()
+		self.failUnlessEqual(client.get('/dman/understand/',{'payload':payload}).status,200)
