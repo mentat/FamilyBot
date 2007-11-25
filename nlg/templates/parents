@@ -1,0 +1,8 @@
+The parents of {{response.subject.title}} are
+	{% for parent in response.result %}
+		{% if forloop.last %}
+			and {{parent.title}}
+		{% else %}
+			{{parent.title}},
+		{% endif %}
+	{% endfor %}

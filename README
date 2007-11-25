@@ -11,6 +11,15 @@
 		},
 		{
 			'type':'output',
+			'action':'parents',
+			'subject': {'id':1234, 'title':'anne'},
+			'result': [
+				{'id':333, 'title':'mike', 'gender':'M'},
+				{'id':334, 'title':'susan', 'gender':'F'}
+			]
+		},
+		{
+			'type':'output',
 			'action':'father',
 			'subject': {'id':1234, 'title':'mike'},
 			'result': [

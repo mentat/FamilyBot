@@ -1,0 +1,1 @@
+The father of {{response.subject.title}} is {{response.result}}
