@@ -18,7 +18,7 @@ CHILDREN_JSON_REQUEST = {
 				'action':'children',
 				'subject': {'id':1234, 'title':'mike'},
 				'result': [
-					{'id':333, 'title':'ann'}, {'id':334,'title':'jimmy'}
+					{'id':333, 'title':'ann', 'gender':'F'}, {'id':334,'title':'jimmy', 'gender':'M'}
 				]
 			},
 			{
@@ -26,8 +26,8 @@ CHILDREN_JSON_REQUEST = {
 				'action':'children',
 				'subject': {'id':1234, 'title':'mike'},
 				'result':[
-					{'id':333, 'title':'ann', 'parent':1234},
-					{'id':334,'title':'jimmy','parent':1234}
+					{'id':333, 'title':'ann','gender':'F', 'parent':1234},
+					{'id':334,'title':'jimmy', 'gender':'M', 'parent':1234}
 				]
 			}
 		]

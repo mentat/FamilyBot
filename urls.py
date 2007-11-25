@@ -9,5 +9,6 @@ urlpatterns = patterns('',
 
 	(r'^generate/', 'nlg.views.generate'),
 	(r'^nlu/', include('familybot.nlu.urls')),
+	(r'^nlg/', include('familybot.nlg.urls')),
 	(r'^dman/', include('familybot.dman.urls'))
 )

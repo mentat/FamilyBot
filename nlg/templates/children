@@ -1,0 +1,15 @@
+{{response.subject.title}} has the child{{response.result|length|pluralize:"ren"}}:
+ 	{% ifequal response.result|length 1 %}
+		{{child.title}}
+	{% endifequal %}
+	{% ifnotequal response.result|length 1 %}
+		{% for child in response.result %}
+			{% if forloop.last %}
+				and {{child.title}}
+			{% else %}
+				{{child.title}},
+			{% endif %}
+		{% endfor %}
+	{% endifnotequal %}
+	
+
