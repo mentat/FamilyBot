@@ -1,5 +1,6 @@
 from django.conf.urls.defaults import *
 
-urlpatterns = patterns('',
-	(r'^understand/$', 'dman.views.understand')
+urlpatterns = patterns('dman.views',
+	(r'^understand/$', 'understand'),
+	(r'^load/(?P<subject>[A-Za-z]+)/(?P<relation>[A-Za-z ]+)/', 'load')
 )

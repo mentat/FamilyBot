@@ -32,4 +32,12 @@ class ManagerTest(TestCase):
 			]
 		])
 		client = Client()
-		self.failUnlessEqual(client.get('/dman/understand/',{'payload':payload}).status_code,200)
+		self.failUnlessEqual(client.get(
+			'/dman/understand/',{'payload':payload}
+			).status_code, 200)
+			
+		test = client.get('/dman/load/adam/sons/')
+		self.failIfEqual(test.content.find('Abel'),-1)
+		self.failIfEqual(test.content.find('Seth'),-1)
+		self.failIfEqual(test.content.find('Cain'),-1)
+		self.failUnlessEqual(test.status_code, 200)

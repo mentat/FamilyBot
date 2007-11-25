@@ -25,7 +25,9 @@ IS
 	(mother)
 	(father)
 	(sister)
+	(sisters)
 	(brother)
+	(brothers)
 	(nephew)
 	(niece)
 	(cousin)
@@ -34,6 +36,8 @@ IS
 	(wife)
 	(husband)
 GRANDS
+	(grand children)
+	(grand child)
 	(grand son)
 	(grand mother)
 	(grand father)

@@ -30,6 +30,20 @@ FRAMES = [
 	}
 ]
 
+def get_greats(subject, count, model):
+	# Resolve greats
+	if count==0:
+		return [subject]
+	data = []
+	if type(subject)==list:
+		for x in subject:
+			for y in model(x):
+				data += get_greats(y, count-1, model)
+	else:
+		for y in model(subject):
+			data += get_greats(y, count-1, model)
+	return data
+
 def understand_relation(parse):
 	# Relation: required nodes: Relation_Type, Person_Name
 	
@@ -50,8 +64,8 @@ def understand_relation(parse):
 		
 	if available != required:
 		return HttpResponse("I'm missing %s." % ", ".join(required-available))
-	print values
-	relation = values['Relation_Type'][0].lower()
+
+	relation = " ".join(x.lower() for x in values['Relation_Type'])
 	
 	# If subjects are anded--use intersection
 	subject_and = True
@@ -59,12 +73,16 @@ def understand_relation(parse):
 		operator = set.intersection
 	else:
 		operator = set.union
+		
+	return get_data(operator, values, relation)
+		
+def get_data(operator, values, relation):
 	
 	# Build list of subjects
 	subject = Person.objects.none()
 	for val in values['Person_Name']:
 		subject |= Person.objects.filter(name__iexact=val)
-	
+		
 	if relation=='father':	
 		data = set([x.father.id for x in subject if x.father is not None])
 		if len(data)!=1:
@@ -78,15 +96,32 @@ def understand_relation(parse):
 		data = subject[0].spouses.filter(gender='M')
 	elif relation.startswith('child'):
 		data = subject[0].children()
+	elif relation.find('grand') != -1 or relation.find('great') != -1:
+		greats = relation.count('grand') + relation.count('great') + 1
+		data = get_greats(list(subject), greats, Person.children)
 	elif relation.startswith('son'):
-		data = Person.objects.filter(id__in=reduce(lambda x,y: operator(x, y),[set([y['id'] for y in x.sons().values('id')]) for x in subject]))
+		data = Person.objects.filter(id__in=reduce(
+			lambda x,y: operator(x, y),
+			[set([y['id'] for y in x.sons().values('id')]) for x in subject])
+		)
+	elif relation.startswith('brother'):
+		data = set(x['id'] for x in subject[0].father.sons().values('id')) - set([x.id for x in subject])
+		data = Person.objects.filter(id__in=data)
+		
 	elif relation.startswith('daughter'):
 		data = subject[0].daughters()
 	else:
-		return HttpResponse('I do not understand that relation (%s).' % (
-			" ".join([x for x in values['Relation_Type']])  ))
-
+		return HttpResponse('I do not understand that relation (%s).' % relation)
+	
+	if len(data)==0:
+		return HttpResponse('I cannot find that data.')
+		
 	return render_to_response('data.html', {'subject':subject, 'data':data, 'values':values})
+	
+def load(request, subject, relation):
+	# A more direct inferface to the DMAN
+	
+	return get_data(set.intersection, {'Person_Name':[subject]}, relation)
 	
 def understand(request):
 	# Understand a message from the NLU
