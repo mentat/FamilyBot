@@ -11,6 +11,7 @@
 			<object pk="1"></object>
 		</field>
 	</object>
+	<!-- sons of adam and eve -->
 	<object pk="3" model="dman.Person">
 		<field type="CharField" name="name">Cain</field>
 		<field type="CharField" name="gender">M</field>
@@ -23,4 +24,217 @@
 		<field type="ForeignKey" name="father">1</field>
 		<field type="CharField" name="gender">M</field>
 	</object>
+	<object pk="5" model="dman.Person">
+		<field type="CharField" name="name">Seth</field>
+		<field type="ForeignKey" name="mother">2</field>
+		<field type="ForeignKey" name="father">1</field>
+		<field type="CharField" name="gender">M</field>
+	</object>
+	<!-- Line of seth -->
+	<object pk="6" model="dman.Person">
+		<field type="CharField" name="name">Enos</field>
+		<field type="ForeignKey" name="mother"><None></None></field>
+		<field type="ForeignKey" name="father">5</field>
+		<field type="CharField" name="gender">M</field>
+	</object>
+	<object pk="7" model="dman.Person">
+		<field type="CharField" name="name">Cainan</field>
+		<field type="ForeignKey" name="mother"><None></None></field>
+		<field type="ForeignKey" name="father">6</field>
+		<field type="CharField" name="gender">M</field>
+	</object>
+	<object pk="8" model="dman.Person">
+		<field type="CharField" name="name">Mahalaleel</field>
+		<field type="ForeignKey" name="mother"><None></None></field>
+		<field type="ForeignKey" name="father">7</field>
+		<field type="CharField" name="gender">M</field>
+	</object>
+	<object pk="9" model="dman.Person">
+		<field type="CharField" name="name">Jared</field>
+		<field type="ForeignKey" name="mother"><None></None></field>
+		<field type="ForeignKey" name="father">8</field>
+		<field type="CharField" name="gender">M</field>
+	</object>
+	<object pk="10" model="dman.Person">
+		<field type="CharField" name="name">Enoch</field>
+		<field type="ForeignKey" name="mother"><None></None></field>
+		<field type="ForeignKey" name="father">9</field>
+		<field type="CharField" name="gender">M</field>
+	</object>
+	<object pk="11" model="dman.Person">
+		<field type="CharField" name="name">Methuselah</field>
+		<field type="ForeignKey" name="mother"><None></None></field>
+		<field type="ForeignKey" name="father">10</field>
+		<field type="CharField" name="gender">M</field>
+	</object>
+	<object pk="12" model="dman.Person">
+		<field type="CharField" name="name">Lamech</field>
+		<field type="ForeignKey" name="mother"><None></None></field>
+		<field type="ForeignKey" name="father">11</field>
+		<field type="CharField" name="gender">M</field>
+	</object>
+	<object pk="13" model="dman.Person">
+		<field type="CharField" name="name">Noah</field>
+		<field type="ForeignKey" name="mother"><None></None></field>
+		<field type="ForeignKey" name="father">12</field>
+		<field type="CharField" name="gender">M</field>
+	</object>
+	<!-- sons of Noah -->
+	<object pk="14" model="dman.Person">
+		<field type="CharField" name="name">Shem</field>
+		<field type="ForeignKey" name="mother"><None></None></field>
+		<field type="ForeignKey" name="father">13</field>
+		<field type="CharField" name="gender">M</field>
+	</object>
+	<object pk="15" model="dman.Person">
+		<field type="CharField" name="name">Jepheth</field>
+		<field type="ForeignKey" name="mother"><None></None></field>
+		<field type="ForeignKey" name="father">13</field>
+		<field type="CharField" name="gender">M</field>
+	</object>
+	<object pk="16" model="dman.Person">
+		<field type="CharField" name="name">Ham</field>
+		<field type="ForeignKey" name="mother"><None></None></field>
+		<field type="ForeignKey" name="father">13</field>
+		<field type="CharField" name="gender">M</field>
+	</object>
+	<!-- sons of Shem -->
+	<object pk="17" model="dman.Person">
+		<field type="CharField" name="name">Arphaxahad</field>
+		<field type="ForeignKey" name="mother"><None></None></field>
+		<field type="ForeignKey" name="father">16</field>
+		<field type="CharField" name="gender">M</field>
+	</object>
+	<object pk="18" model="dman.Person">
+		<field type="CharField" name="name">Asshur</field>
+		<field type="ForeignKey" name="mother"><None></None></field>
+		<field type="ForeignKey" name="father">16</field>
+		<field type="CharField" name="gender">M</field>
+	</object>
+	<object pk="19" model="dman.Person">
+		<field type="CharField" name="name">Elam</field>
+		<field type="ForeignKey" name="mother"><None></None></field>
+		<field type="ForeignKey" name="father">16</field>
+		<field type="CharField" name="gender">M</field>
+	</object>
+	<object pk="20" model="dman.Person">
+		<field type="CharField" name="name">Lud</field>
+		<field type="ForeignKey" name="mother"><None></None></field>
+		<field type="ForeignKey" name="father">16</field>
+		<field type="CharField" name="gender">M</field>
+	</object>
+	<object pk="21" model="dman.Person">
+		<field type="CharField" name="name">Aram</field>
+		<field type="ForeignKey" name="mother"><None></None></field>
+		<field type="ForeignKey" name="father">16</field>
+		<field type="CharField" name="gender">M</field>
+	</object>
+	<!-- Line of Arphaxahad, son of Shem -->
+	<object pk="22" model="dman.Person">
+		<field type="CharField" name="name">Salah</field>
+		<field type="ForeignKey" name="mother"><None></None></field>
+		<field type="ForeignKey" name="father">17</field>
+		<field type="CharField" name="gender">M</field>
+	</object>
+	<object pk="23" model="dman.Person">
+		<field type="CharField" name="name">Eber</field>
+		<field type="ForeignKey" name="mother"><None></None></field>
+		<field type="ForeignKey" name="father">22</field>
+		<field type="CharField" name="gender">M</field>
+	</object>
+	<!-- sons of Eber -->
+	<object pk="24" model="dman.Person">
+		<field type="CharField" name="name">Joktan</field>
+		<field type="ForeignKey" name="mother"><None></None></field>
+		<field type="ForeignKey" name="father">23</field>
+		<field type="CharField" name="gender">M</field>
+	</object>
+	<object pk="25" model="dman.Person">
+		<field type="CharField" name="name">Peleg</field>
+		<field type="ForeignKey" name="mother"><None></None></field>
+		<field type="ForeignKey" name="father">23</field>
+		<field type="CharField" name="gender">M</field>
+	</object>
+	<!-- Line of Peleg -->
+	<object pk="26" model="dman.Person">
+		<field type="CharField" name="name">Reu</field>
+		<field type="ForeignKey" name="mother"><None></None></field>
+		<field type="ForeignKey" name="father">25</field>
+		<field type="CharField" name="gender">M</field>
+	</object>
+	<object pk="27" model="dman.Person">
+		<field type="CharField" name="name">Serug</field>
+		<field type="ForeignKey" name="mother"><None></None></field>
+		<field type="ForeignKey" name="father">26</field>
+		<field type="CharField" name="gender">M</field>
+	</object>
+	<object pk="28" model="dman.Person">
+		<field type="CharField" name="name">Nahor</field>
+		<field type="ForeignKey" name="mother"><None></None></field>
+		<field type="ForeignKey" name="father">27</field>
+		<field type="CharField" name="gender">M</field>
+	</object>
+	<object pk="29" model="dman.Person">
+		<field type="CharField" name="name">Terah</field>
+		<field type="ForeignKey" name="mother"><None></None></field>
+		<field type="ForeignKey" name="father">28</field>
+		<field type="CharField" name="gender">M</field>
+	</object>
+	<!-- Terah's unnamed wives -->
+	<object pk="30" model="dman.Person">
+		<field type="CharField" name="name">Terah Wife 1</field>
+		<field type="ForeignKey" name="mother"><None></None></field>
+		<field type="ForeignKey" name="father"><None></None></field>
+		<field type="CharField" name="gender">F</field>
+		<field to="dman.Person" name="spouses" rel="ManyToManyRel">
+			<object pk="29"></object>
+		</field>
+	</object>
+	<object pk="31" model="dman.Person">
+		<field type="CharField" name="name">Terah Wife 2</field>
+		<field type="ForeignKey" name="mother"><None></None></field>
+		<field type="ForeignKey" name="father"><None></None></field>
+		<field type="CharField" name="gender">F</field>
+		<field to="dman.Person" name="spouses" rel="ManyToManyRel">
+			<object pk="29"></object>
+		</field>
+	</object>
+	<!-- Terah's children -->
+	<object pk="32" model="dman.Person">
+		<field type="CharField" name="name">Abraham</field>
+		<field type="ForeignKey" name="mother">31</field>
+		<field type="ForeignKey" name="father">29</field>
+		<field type="CharField" name="gender">M</field>
+	</object>
+	<object pk="33" model="dman.Person">
+		<field type="CharField" name="name">Sara</field>
+		<field type="ForeignKey" name="mother">30</field>
+		<field type="ForeignKey" name="father">29</field>
+		<field type="CharField" name="gender">F</field>
+		<field to="dman.Person" name="spouses" rel="ManyToManyRel">
+			<object pk="32"></object>
+		</field>
+	</object>
+	<!-- Abraham's other wives -->
+	<!-- handmaiden -->
+	<object pk="34" model="dman.Person">
+		<field type="CharField" name="name">Hagar</field>
+		<field type="ForeignKey" name="mother"><None></None></field>
+		<field type="ForeignKey" name="father"><None></None></field>
+		<field type="CharField" name="gender">F</field>
+		<field to="dman.Person" name="spouses" rel="ManyToManyRel">
+			<object pk="32"></object>
+		</field>
+	</object>
+	<!-- concubine -->
+	<object pk="34" model="dman.Person">
+		<field type="CharField" name="name">Keturah</field>
+		<field type="ForeignKey" name="mother"><None></None></field>
+		<field type="ForeignKey" name="father"><None></None></field>
+		<field type="CharField" name="gender">F</field>
+		<field to="dman.Person" name="spouses" rel="ManyToManyRel">
+			<object pk="32"></object>
+		</field>
+	</object>
+	
 </django-objects>

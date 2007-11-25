@@ -1,17 +1,17 @@
 [who_subject]
 	(*of [Person_Name])
+	(*of [Person_Name] and [Person_Name])
 ;
 [how_related]
 	(who *IS *the [Relation_Type])
+	(who *IS [Person_Name] [Relation_Type])
 IS
 	(is)
 	(was)
 ;
 [Relation_Type]
-	(great grand father)
-	(great grand mother)
-	(grand mother)
-	(grand father)
+	(+great GRANDS)
+	(GRANDS)
 	(step brother)
 	(step sister)
 	(step father)
@@ -33,6 +33,11 @@ IS
 	(aunt)
 	(wife)
 	(husband)
+GRANDS
+	(grand son)
+	(grand mother)
+	(grand father)
+	(grand son)
 ;
 [Person_Name]
 #include names

@@ -13,12 +13,16 @@ def generate_graphviz(graph):
 		framenum = 0
 		for frame in parse:
 			dotput += "%s -> %s%d;\n" % (frame['name'], frame['name'], framenum)
+			last_node_name = None
 			for node in frame['nodes']:
 				if len(node['name']) > 0:
+					last_node_name = node['name'][0]
 					dotput += "%s%d -> %s;\n" % (frame['name'], framenum, node['name'][0])
 					dotput += "%s -> %s;\n" % (node['name'][0], node['value'])
 				else:
-					dotput += "%s%d -> %s;\n" % (frame['name'], framenum, node['value'])
+					dotput += "%s%d -> %s;\n" % (frame['name'], framenum, last_node_name)
+					dotput += "%s -> %s;\n" % (last_node_name, node['value'])
+					#dotput += "%s%d -> %s;\n" % (frame['name'], framenum, node['value'])
 			framenum += 1
 	dotput += "}"
 	return dotput
@@ -51,7 +55,7 @@ def ask(request):
 	if request.method=='GET':
 		return render_to_response('ask.html')
 	else:
-		question = request.POST.get('question')
+		question = request.POST.get('question').replace("'s", "")
 		key = md5.new(question).hexdigest()
 		parse = phoenix.parse(question, dir="nlu/lib/Phoenix/FamilyGrammar", net="REL.net")
 		cache.set(key, parse, 60*60)
