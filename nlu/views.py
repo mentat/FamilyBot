@@ -55,7 +55,7 @@ def ask(request):
 		key = md5.new(question).hexdigest()
 		parse = phoenix.parse(question, dir="nlu/lib/Phoenix/FamilyGrammar", net="REL.net")
 		cache.set(key, parse, 60*60)
-		print pprint.pformat(parse)
 		return render_to_response('ask.html', 
-			{'message':pprint.pformat(parse), 'key':key, 'question':request.POST.get('question','')}
+			{'message':pprint.pformat(parse), 'key':key,
+			 'payload':simplejson.dumps(parse), 'question':request.POST.get('question','')}
 		)

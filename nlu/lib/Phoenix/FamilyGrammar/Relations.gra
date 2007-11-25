@@ -16,6 +16,12 @@ IS
 	(step sister)
 	(step father)
 	(step mother)
+	(daughter)
+	(daughters)
+	(child)
+	(children)
+	(son)
+	(sons)
 	(mother)
 	(father)
 	(sister)
@@ -25,6 +31,8 @@ IS
 	(cousin)
 	(uncle)
 	(aunt)
+	(wife)
+	(husband)
 ;
 [Person_Name]
 #include names

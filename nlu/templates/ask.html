@@ -1,5 +1,7 @@
 <html>
-<head><title>Ask me a question</title></head>
+<head>
+	<script type="text/javascript" src="http://static-dallas.keyingredient.com/js/mootools.v1.11.js"></script>
+	<title>Ask me a question</title></head>
 <body>
 	{% if message %}
 	<pre style="background:gray;">{{message}}</pre><br/>
@@ -11,4 +13,23 @@
 		</label><br/>
 		<input type="submit" value="Ask!"/>
 	</form>
+	
+	{% if message %}
+	<hr/>
+	<div id="data">
+		
+	</div>
+	<script>
+	function showResponse(result) {
+		$('data').innerHTML = result;
+	}
+	new Ajax(
+		"/dman/understand/", 
+		{
+			method: 'get', 
+			data: "payload={{payload|safe|urlencode}}", 
+			onSuccess: showResponse
+		}).request();
+	</script>
+	{% endif %}
 </body>

@@ -7,6 +7,9 @@
 	<object pk="2" model="dman.Person">
 		<field type="CharField" name="name">Eve</field>
 		<field type="CharField" name="gender">F</field>
+		<field to="dman.Person" name="spouses" rel="ManyToManyRel">
+			<object pk="1"></object>
+		</field>
 	</object>
 	<object pk="3" model="dman.Person">
 		<field type="CharField" name="name">Cain</field>

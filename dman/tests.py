@@ -24,13 +24,12 @@ class ManagerTest(TestCase):
 		payload = simplejson.dumps([
 			[
 				{'name': 'Relation', 'nodes': [
-					{'name': ['Relation_Type'], 'value': 'SISTER'}
+					{'name': ['Relation_Type'], 'value': 'FATHER'}
 				]},
 		  		{'nodes': [
 					{'name': ['Person_Name'], 'value': 'CAIN'}
 				], 'name': 'Relation'}
 			]
 		])
-		print payload
 		client = Client()
-		self.failUnlessEqual(client.get('/dman/understand/',{'payload':payload}).status,200)
+		self.failUnlessEqual(client.get('/dman/understand/',{'payload':payload}).status_code,200)

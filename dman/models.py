@@ -15,7 +15,7 @@ class Person(models.Model):
 	father = models.ForeignKey('self', blank=True, null=True, related_name='paternal')
 	gender = models.CharField(maxlength=1, choices = GENDER, db_index=True)
 	
-	spouses = models.ManyToManyField('self', null=True, related_name="spouses")
+	spouses = models.ManyToManyField('self', null=True,symmetrical=True,db_table="dman_spouses")
 	
 	objects = PersonManager()
 	
@@ -25,6 +25,12 @@ class Person(models.Model):
 			return Person.objects.filter(father=self)
 		else:
 			return Person.objects.filter(mother=self)
+			
+	def sons(self):
+		return self.children().filter(gender='M')
+		
+	def daughters(self):
+		return self.children().filter(gender='F')
 	
 	def __unicode__(self):
 		return self.name
