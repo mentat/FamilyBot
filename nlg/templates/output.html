@@ -1,0 +1,19 @@
+<HTML>
+	<HEAD><TITLE>FamilyBot Query Response</TITLE></HEAD>
+	<BODY>
+		<H1>Your Query:</H1>
+		<div>
+		</div>
+		<H1>Query Output:</H1>
+		<div>
+			{{ data.stringOutput }}
+		</div>
+		<H1>Family Tree:</H1>
+		<div>
+			<img align="center" src="/nlg/graphic/?graphviz={{data.graph|urlencode}}"/>
+		</div>
+		<H1>Listen to your response!</H1>
+		<div>
+		</div>
+	</BODY>
+</HTML>
