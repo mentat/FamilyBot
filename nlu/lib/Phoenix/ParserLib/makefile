@@ -1,7 +1,7 @@
 CFLAGS= -g -Wall 
 PHOENIX_OBS=  parse.o match.o grammar.o dict.o pconf.o  print_structs.o 
 
-all: python_lib compile_grammar
+all: python_lib compile_grammar concept_leaf parse_text nfa_to_dfa
 #all: libparse.a compile_grammar concept_leaf parse_text nfa_to_dfa test
 
 python_lib:
