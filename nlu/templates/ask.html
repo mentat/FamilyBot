@@ -1,6 +1,6 @@
 <html>
 <head>
-	<script type="text/javascript" src="http://localhost/~mentat/js/mootools.v1.11.js"></script>
+	<script type="text/javascript" src="http://static.keyingredient.com/js/mootools.v1.11.js"></script>
 	<title>Ask me a question</title></head>
 <body>
 	{% if message %}
@@ -16,11 +16,15 @@
 	
 	{% if message %}
 	<hr/>
-	<div id="data">
+	<pre id="data">
+		
+	</pre>
+	<hr/>
+	<div id="speak">
 		
 	</div>
 	<script>
-	function showResponse(result) {
+	function showData(result) {
 		$('data').innerHTML = result;
 	}
 	new Ajax(
@@ -28,8 +32,15 @@
 		{
 			method: 'get', 
 			data: "payload={{payload|safe|urlencode}}", 
-			onSuccess: showResponse
+			onComplete: showData
 		}).request();
+	new Ajax(
+		"/generate/", 
+		{
+			method: 'get', 
+			data: "payload={{payload|safe|urlencode}}", 
+			update:$('speak')
+		}).request();	
 	</script>
 	{% endif %}
 </body>

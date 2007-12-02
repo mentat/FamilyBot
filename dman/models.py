@@ -19,6 +19,9 @@ class Person(models.Model):
 	
 	objects = PersonManager()
 	
+	def gen_spouse_list(self):
+		return ",".join([str(x.id) for x in self.souses.all()])
+	
 	def fathers(self):
 		if self.father is not None:
 			return [self.father]

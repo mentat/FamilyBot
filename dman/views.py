@@ -123,7 +123,9 @@ def get_data(operator, values, relation):
 	if len(data)==0:
 		return HttpResponse('I cannot find that data.')
 		
-	return render_to_response('data.html', {'subject':subject, 'data':data, 'values':values})
+	actions = [{'name':relation , 'subject':subject, 'data':data, 'context':list(data) + list(subject)}]
+	
+	return render_to_response('data.html', {'actions':actions})
 	
 def load(request, subject, relation):
 	# A more direct inferface to the DMAN

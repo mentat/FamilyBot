@@ -1,4 +1,29 @@
-<h3>Data</h3>
-<ul>
-{% for res in data %}<li>{{res}}</li>{% endfor %}
-</ul>
+{
+	'actions': [
+		{% for action in actions %}
+		{
+			'type':'output',
+			'action':'{{action.name}}',
+			'subject': {'id':[{% for s in action.subject %}{{s.id}}{%endfor%}] },
+			'result': [
+				{% for data in action.data %}
+				{'id':{{data.id}} },{% endfor %}
+			]
+		}, 
+		{
+			'type':'context',
+			'action':'{{action.name}}',
+			'subject': {'id':[{% for s in action.subject %}{{s.id}}{%endfor%}]},
+			'result':[ {% for data in action.context %}
+				{'id':{{data.id}}, 
+				'title':'{{data.name}}', {% if data.mother %}
+				'mother':{{data.mother.id}}, {% endif %} {% if data.father %}
+				'father':{{data.father.id}}, 
+				{% endif %}'spouse':[{{self.gen_spouse_list}}], 
+				'gender':'{{data.gender}}'},
+				{% endfor %}
+			]
+		}
+		{% endfor %}
+	]
+}
