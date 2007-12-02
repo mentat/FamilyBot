@@ -32,9 +32,10 @@ class ManagerTest(TestCase):
 			]
 		])
 		client = Client()
-		self.failUnlessEqual(client.get(
-			'/dman/understand/',{'payload':payload}
-			).status_code, 200)
+		response = client.get('/dman/understand/',{'payload':payload})
+		self.failUnlessEqual(response.status_code, 200)
+		
+		result = simplejson.loads(response.content)
 			
 		test = client.get('/dman/load/adam/sons/')
 		self.failIfEqual(test.content.find('Abel'),-1)

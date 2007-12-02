@@ -4,7 +4,7 @@
 		{
 			'type':'output',
 			'action':'{{action.name}}',
-			'subject': {'id':[{% for s in action.subject %}{{s.id}}{%endfor%}] },
+			'subject': {'id':[{% for s in action.subject %}{{s.id}},{%endfor%}] },
 			'result': [
 				{% for data in action.data %}
 				{'id':{{data.id}} },{% endfor %}
@@ -13,7 +13,7 @@
 		{
 			'type':'context',
 			'action':'{{action.name}}',
-			'subject': {'id':[{% for s in action.subject %}{{s.id}}{%endfor%}]},
+			'subject': {'id':[{% for s in action.subject %}{{s.id}},{%endfor%}]},
 			'result':[ {% for data in action.context %}
 				{'id':{{data.id}}, 
 				'title':'{{data.name}}', {% if data.mother %}
