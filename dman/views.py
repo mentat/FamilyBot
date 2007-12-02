@@ -125,7 +125,7 @@ def get_data(operator, values, relation):
 		
 	actions = [{'name':relation , 'subject':subject, 'data':data, 'context':list(data) + list(subject)}]
 	
-	return render_to_response('data.json', {'actions':actions})
+	return render_to_response('data.json', {'actions':actions}, mimetype='text/json')
 	
 def load(request, subject, relation):
 	# A more direct inferface to the DMAN
