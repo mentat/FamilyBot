@@ -20,7 +20,7 @@ def _processTemplate(templateName, response):
 	Next, we generate the graphviz output for our request.
 	"""
 	textOutput = render_to_string(templateName, {"response":response[0]})
-	graphvizOutput = _graphvizBuild({"response":response})
+	graphvizOutput = _graphvizBuild(response)
 	#graphvizOutput = render_to_string(templateName+".dot", {"response":response})
 	htmlTemplateData = {"stringOutput":textOutput.strip(), "graph":graphvizOutput}
 	return render_to_response("output.html", {"data":htmlTemplateData})
@@ -33,28 +33,43 @@ def _graphvizBuild(response):
 	"""
 	context = response[1]
 	main = response[0]
-	contextNodes = dict([(x['id', x) for x in context["result"]])
-	mainNodes = dict([(x['id', x) for x in main["result"]])
-	graphvizString += "digraph " + context["action"] +	" {\n"
-	
+	contextNodes = dict([(x['id'], x) for x in context["result"]])
+	mainNodes = dict([(x['id'], x) for x in main["result"]])
+	graphvizString = "digraph " + context["action"] +	" {\n"
+
 	for node in context["result"]:
 		# build the style definition for the current node
-		if main.get[node["id"]] == null:
-			graphvizString += "\t" + node["title"] + " [style=filled fillcolor=black fontcolor=white]"
+		if mainNodes.get(node["id"]) == None:
+			graphvizString += "\t" + node["title"] + " [style=filled fillcolor=black fontcolor=white]\n"
 		else:
 			graphvizString += "\t" + node["title"]
 			if node["gender"] == 'M':
 				graphvizString += " [style=filled fillcolor=\"#80C9FF\" fontcolor=white]\n"
 			else: 
 				graphvizString += " [style=filled fillcolor=\"#FF80B8\" fontcolor=white]\n"
-		if node.get["mother"] != null:
-			# build the mother -> son relationship
-			graphvizString += "\t" + contextNodes[node["mother"]] + " -> " node["title"] +"\n"
-		if node.get["father"] != null:
-			# build the father -> son relationship
-			graphvizString += "\t" + contextNodes[node["father"]] + " -> " node["title"] +"\n"
+		for spouse in node["spouse"]:
+			if node["gender"] == 'M':
+				spouseNodeName = node["title"]+"_"+contextNodes[spouse]["title"]
+				spouseLabel = node["title"] + " & " + contextNodes[spouse]["title"]
+			else:
+				spouseNodeName= contextNodes[spouse]["title"] + "_" + node["title"]
+				spouseLabel = contextNodes[spouse]["title"] + " & " + node["title"]
+			graphvizString += "\t" + node["title"] + " -> " + spouseNodeName + "\n"
+			graphvizString += "\t" + spouseNodeName + "[label=\"" + spouseLabel + "\" style=filled fillcolor=gray fontcolor=white]\n"
+		if node.get("mother") != None and node.get("father") != None:
+			# build a parent node, and a parent -> son relationship
+			graphvizString += "\t" + contextNodes[node["father"]]["title"] + "_" + contextNodes[node["mother"]]["title"]
+			graphvizString += " -> " + node["title"] +"\n"
+		else:
+			if node.get("mother") != None:
+				# build the mother -> son relationship
+				graphvizString += "\t" + contextNodes[node["mother"]]["title"] + " -> " + node["title"] +"\n"
+			if node.get("father") != None:
+				# build the father -> son relationship
+				graphvizString += "\t" + contextNodes[node["father"]]["title"] + " -> " + node["title"] +"\n"
 	
 	graphvizString += "\n}"
+	print graphvizString
 	return graphvizString
 			
 	
