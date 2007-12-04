@@ -6,6 +6,7 @@
 # set LIBS to .gra files to load from $PHOENIX/Grammars
 # if SingleFile == 1, then all grammar rules are in file $TASK.gra
 # if SingleFile == 0, then compiles all files in dir with extension .gra
+cd nlu/lib/Phoenix/FamilyGrammar
 
 set TASK="REL"
 set LIBS="date_time.gra number.gra next.gra"

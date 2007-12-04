@@ -23,6 +23,8 @@
 	<div id="speak">
 		
 	</div>
+	<div id="context">
+	</div>
 	<script>
 	function showData(result) {
 		$('data').innerHTML = result;
@@ -41,6 +43,12 @@
 			data: "payload={{payload|safe|urlencode}}", 
 			update:$('speak')
 		}).request();	
+	new Ajax(
+		"/dman/context/", 
+		{
+			method: 'get',  
+			update:$('context')
+		}).request();
 	</script>
 	{% endif %}
 </body>

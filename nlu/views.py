@@ -63,3 +63,25 @@ def ask(request):
 			{'message':pprint.pformat(parse), 'key':key,
 			 'payload':simplejson.dumps(parse), 'question':request.POST.get('question','')}
 		)
+		
+def refresh_grammar(request):
+	
+	from dman.models import Person
+	import commands
+	people = [x['name'] for x in Person.objects.all().values('name')]
+	name_file = open('nlu/lib/Phoenix/FamilyGrammar/names','w')
+
+	for p in people:
+		name_file.write('\t(%s)\n' % p.lower())
+
+	name_file.write("""	(his)
+	(him)
+	(her)
+	(hers)
+	(they)
+	(them)
+	(their)""")
+	name_file.close()
+
+	(stat, output) = commands.getstatusoutput('tcsh nlu/lib/Phoenix/FamilyGrammar/compile')
+	return HttpResponse(output)
