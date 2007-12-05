@@ -44,7 +44,7 @@ def get_greats(subject, count, model):
 			data += get_greats(y, count-1, model)
 	return data
 
-def understand_relation(parse):
+def understand_relation(request, parse):
 	# Relation: required nodes: Relation_Type, Person_Name
 	
 	required = set(['Relation_Type', 'Person_Name'])
@@ -74,14 +74,55 @@ def understand_relation(parse):
 	else:
 		operator = set.union
 		
-	return get_data(operator, values, relation)
+	return generate_genealogy(request, operator, values, relation)
+	
+def _check_context(request, relation, what):
+	" Check the current context for a subject for anaphora resolution. ."
+	if request.session.get('context') is None:
+		return Person.objects.none()
 		
-def get_data(operator, values, relation):
+	context = request.session['context']
+	
+	def find_in_context(plural=False, male=True):
+		print "Context is %s" % context
+		for x in context:
+			# Todo: remember same query--not needed now
+			#if not x['name'].lower() == relation.lower():
+			#	continue
+			genders = [y['gender'] for y in x['subject']]
+			print genders
+			if not plural and male and len(genders)==1 and 'M' in genders:
+				print "Male match"
+				return Person.objects.filter(id__in=[y['id'] for y in x['subject']])
+			if not plural and not male and len(genders)==1 and 'F' in genders:
+				return Person.objects.filter(id__in=[y['id'] for y in x['subject']])
+			if plural and len(genders)>1:
+				return Person.objects.filter(id__in=[y['id'] for y in x['subject']])
+			else:
+				return Person.objects.none()
+
+	if what in ['him','his']:
+		return find_in_context() # sexist call
+	elif what in ['her','hers']:
+		return find_in_context(male=False)
+	elif what in ['they','their','them']:
+		return find_in_context(male=False, )
+
+def generate_genealogy(request, operator, values, relation):
 	" Get the data for the response based on relation, subject, and op. "
 	# Build list of subjects
 	subject = Person.objects.none()
+	subject_strings = []
 	for val in values['Person_Name']:
-		subject |= Person.objects.filter(name__iexact=val)
+		subject_strings.append(val.lower())
+		if val.lower() in ['his','him','her','they','their','them']:
+			subject |= _check_context(request,relation,val.lower())
+		else:
+			subject |= Person.objects.filter(name__iexact=val)
+			
+	# Check if we just dont know who this is.
+	if subject.count() == 0:
+		return HttpResponse(u"I do not know who '%s' is." % (" ".join(subject_strings)) )
 		
 	if relation=='father':	
 		data = set([x.father.id for x in subject if x.father is not None])
@@ -125,11 +166,28 @@ def get_data(operator, values, relation):
 		
 	actions = [{'name':relation , 'subject':subject, 'data':data, 'context':list(data) + list(subject)}]
 	
+	if request.session.get('context') is None:
+		request.session['context'] = [{'name':relation, 'subject':[s.get_values() for s in subject]}]
+	else:
+		session_context = request.session['context']
+		session_context.insert(0, {'name':relation, 'subject':[s.get_values() for s in subject]})
+		request.session['context'] = session_context
+	
 	return render_to_response('data.json', {'actions':actions}, mimetype='text/json')
 	
 def load(request, subject, relation):
 	# A more direct inferface to the DMAN
-	return get_data(set.intersection, {'Person_Name':[subject]}, relation)
+	return generate_genealogy(request, set.intersection, {'Person_Name':[subject]}, relation)
+	
+def context(request):
+	if request.session.get('context') is None:
+		return HttpResponse('{}')
+	else:
+		try:
+			return HttpResponse(simplejson.dumps(request.session['context']))
+		except:
+			del request.session['context']
+			return HttpResponse('{}')
 	
 def understand(request):
 	# Understand a message from the NLU
@@ -141,5 +199,6 @@ def understand(request):
 		
 	for parse in instance:
 		if parse[0]['name']=='Relation':
-			return understand_relation(parse)
+			return understand_relation(request, parse)
+	
 	

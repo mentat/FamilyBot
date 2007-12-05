@@ -17,7 +17,7 @@
 				"title":"{{data.name}}", {% if data.mother %}
 				"mother":{{data.mother.id}}, {% endif %} {% if data.father %}
 				"father":{{data.father.id}}, 
-				{% endif %}"spouse":[{{self.gen_spouse_list}}], 
+				{% endif %}"spouse":[{{data.gen_spouse_list}}], 
 				"gender":"{{data.gender}}"}{% if not forloop.last %},{% endif %}
 				{% endfor %}
 			]

@@ -20,7 +20,7 @@ class Person(models.Model):
 	objects = PersonManager()
 	
 	def gen_spouse_list(self):
-		return ",".join([str(x.id) for x in self.souses.all()])
+		return ",".join([str(x.id) for x in self.spouses.all()])
 	
 	def fathers(self):
 		if self.father is not None:
@@ -39,6 +39,17 @@ class Person(models.Model):
 		
 	def daughters(self):
 		return self.children().filter(gender='F')
+		
+	def get_values(self):
+		vals = {
+			"id":self.id, "name":self.name, 
+			"gender": self.gender, "spouses":[x.id for x in self.spouses.all()]
+		}
+		if self.father:
+			vals.update({'father':self.father.id})
+		if self.mother:
+			vals.update({'mother':self.mother.id})
+		return vals
 	
 	def __unicode__(self):
 		return self.name

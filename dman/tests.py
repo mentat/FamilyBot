@@ -34,7 +34,6 @@ class ManagerTest(TestCase):
 		client = Client()
 		response = client.get('/dman/understand/',{'payload':payload})
 		self.failUnlessEqual(response.status_code, 200)
-		print response.content
 		result = simplejson.loads(response.content)
 			
 		test = client.get('/dman/load/adam/sons/')
