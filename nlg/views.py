@@ -8,7 +8,7 @@ from tempfile import mkstemp
 
 def generate(request):
 	languageResponse = simplejson.loads(request["payload"])
-	response = _processTemplate(languageResponse["actions"][0]["action"],languageResponse["actions"])
+	response = _processTemplate("template",languageResponse["actions"])
 	return response
 
 def _processTemplate(templateName, response):
@@ -24,37 +24,52 @@ def _processTemplate(templateName, response):
 	main = response[0]
 	contextNodes = dict([(x['id'], x) for x in context["result"]])
 	mainNodes = dict([(x['id'], x) for x in main["result"]])
-	templateNodes = _mergeContext(contextNodes,mainNodes)
-	textOutput = render_to_string(templateName, {"main":mainNodes, "context":contextNodes})
+	#merge context & main for template
+	templateNodes = _mergeContext(context, main, contextNodes,mainNodes)
+	textOutput = render_to_string(templateName, {"response":templateNodes})
 	#clean up text output
 	textOutput = textOutput.replace("\n", "").replace("\t","")
+	#say it
 	voiceOutput = _voiceOutput(textOutput)
+	#create graphviz data
 	graphvizOutput = _graphvizBuild(context, main, contextNodes, mainNodes)
-	#graphvizOutput = render_to_string(templateName+".dot", {"response":response})
+	#create html
 	htmlTemplateData = {"stringOutput":textOutput, "graph":graphvizOutput}
 	return render_to_response("output.html", {"data":htmlTemplateData})
-	
 
-def _voiceOutput(textOutput):
+def externalVoiceOutput(response):
 	"""
 	Generates voice output locally on the system. As of now, this is system dependent
 	and requires OS X. It works with both tiger (10.4) and leopard (10.5), but sounds
 	much better with leopard and the new "alex" voice
 	"""
-	print "Saying voice output: " + textOutput
+	commands.getstatusoutput('say "%s"' % (response['say']))
+	
+def _voiceOutput(textOutput):
+	"""
+	Generates voice output locally on the system. As of now, this is system dependent
+	and requires OS X. It works with both tiger (10.4) and leopard (10.5), but sounds
+	much better with leopard and the new "alex" voice - internal 
+	"""
 	commands.getstatusoutput('say "%s"' % (textOutput))
 	
-
-def _mergeContext(contextNodes, mainNodes):
+def _mergeContext(context, main, contextNodes, mainNodes):
 	"""
 	Takes the context nodes (which contain detailed information about each person) and 
 	the main nodes, which contains just the result of the query with IDs, to be looked 
 	up in the context, and populates it with the necessary data for the text based
-	template matching
+	template matching. Also sets some helpful features the templates use, like length
 	"""
+	mergedNodes = {"subject":[], "result":[]}
+	mergedNodes["pluralSubjects"] = len(main["subject"]["id"]) > 1
+	mergedNodes["pluralResults"] = len(main["result"]) > 1
+	mergedNodes["topic"] = main["action"]
 
-	#	for node in mainNodes["subject"].iteritems()
-	pass
+	for idVal in main["subject"]["id"]:
+		mergedNodes["subject"].append(contextNodes.get(idVal))
+	for node in main["result"]:
+		mergedNodes["result"].append(contextNodes.get(node["id"]))
+	return mergedNodes
 	
 def _graphvizBuild(context, main, contextNodes, mainNodes):
 	"""
@@ -109,7 +124,7 @@ def generateGraphvizFile(response):
 	tmppng, png_filename = mkstemp()
 
 	dotf = open(dot_filename, 'w')
-	dotf.write(request['graphviz'])
+	dotf.write(response['graphviz'])
 	dotf.close()
 
 	commands.getstatusoutput('dot -Tpng -o %s %s' % (png_filename, dot_filename))
