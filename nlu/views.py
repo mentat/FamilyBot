@@ -64,6 +64,31 @@ def ask(request):
 			 'payload':simplejson.dumps(parse), 'question':request.POST.get('question','')}
 		)
 		
+def start_audio(request):
+	" Start the audio record. "
+	import commands
+	tmpf, fn = mkstemp(suffix=".wav")
+	(stat, output) = commands.getstatusoutput("/usr/local/bin/adinrec %s" % fn)
+	print output
+	(stat, output) = commands.getstatusoutput("cat %s | /usr/local/bin/adintool -in stdin -out adinnet -port 9000 -server 127.0.0.1" % fn)
+	print output
+	
+	os.remove(fn)
+	return HttpResponse("OK")
+	
+def get_last_utt(request):
+	import re
+	SEN = re.compile('sentence1: <s> ([A-Z ]+)')
+	strings = ''
+	f = open('/Users/mentat/Desktop/julian/out.txt', 'r')
+	strings = f.read()
+	f.close()
+	try:
+		res = SEN.findall(strings)
+		return HttpResponse(res[-1])
+	except: pass
+	return HttpResponse('')
+		
 def refresh_grammar(request):
 	
 	from dman.models import Person

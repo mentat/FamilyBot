@@ -1,33 +1,86 @@
 <html>
 <head>
-	<script type="text/javascript" src="http://static.keyingredient.com/js/mootools.v1.11.js"></script>
+	<script type="text/javascript" src="http://localhost/~mentat/js/mootools.v1.11.js"></script>
 	<title>Ask me a question</title></head>
+	<script type="text/javascript">
+	function askLast() {
+		new Ajax(
+			"/nlu/last/", 
+			{
+				method: 'get', 
+				onComplete: function(response) {
+					$('id_question').value = response;
+				}
+			}).request();
+	}
+	function goRecord() {
+		$('id_start').setStyle('visibility', 'hidden');
+		new Ajax(
+			"/nlu/start/", 
+			{
+				method: 'get', 
+				onComplete: function(response) {
+					$('id_start').setStyle('visibility', 'visible');
+					setTimeout(askLast, 700);
+				}
+			}).request();
+	}
+	function toggle(id) {
+		if ($(id).style.display=='none')
+			$(id).setStyle('display','block');
+		else
+			$(id).setStyle('display','none');
+			
+		return false;
+	}
+	</script>
+	<style>
+		#content {width:90%; margin: auto; border:1px solid black; padding: 10px;}
+		h1 {font-family: Arial, Helvetica, sans-serif; margin-top: 5px;}
+	</style>
 <body>
-	{% if message %}
-	<pre style="background:gray;">{{message}}</pre><br/>
-	<img align="center" src="/nlu/graphic/{{key}}/"/>
-	{% endif %}
+	<div id="content">
+	<h1>FamilyBot</h1>
+	<div id="pic" style="float:right"></div>
 	<form action="/nlu/" method="post">
 		<label>Ask me a question<br/>
-			<textarea cols="50" rows="5" name="question">{{question}}</textarea>
+			<textarea id="id_question" cols="50" rows="5" name="question">{{question}}</textarea>
 		</label><br/>
 		<input type="submit" value="Ask!"/>
 	</form>
+	<input id="id_start" type="button" onclick="goRecord(); return false;" value="Start Audio"/>
 	
 	{% if message %}
 	<hr/>
-	<pre id="data">
+	<a onclick="return toggle('parse');" href="#">Show Parse</a>
+	<div id="parse" style="display:none;">
+	<pre style="background:gray;">{{message}}</pre><br/>
+	<img align="center" src="/nlu/graphic/{{key}}/"/>
+	</div>
+	{% endif %}
+	
+	{% if message %}
+	<hr/>
+	<a onclick="return toggle('data');" href="#">Show Data</a>
+	<pre id="data" style="display:none;">
 		
 	</pre>
 	<hr/>
-	<div id="speak">
-		
+	<a onclick="return toggle('context');" href="#">Show Context</a>
+	<div id="context" style="display:none;">
 	</div>
-	<div id="context">
+	<div style="clear:both;">&nbsp;</div>
 	</div>
 	<script>
 	function showData(result) {
 		$('data').innerHTML = result;
+			new Ajax(
+				"/generate/", 
+				{
+					method: 'get', 
+					data: "payload="+result, 
+					update: $('pic')
+				}).request();
 	}
 	new Ajax(
 		"/dman/understand/", 
@@ -36,18 +89,18 @@
 			data: "payload={{payload|safe|urlencode}}", 
 			onComplete: showData
 		}).request();
-	new Ajax(
+	/*new Ajax(
 		"/generate/", 
 		{
 			method: 'get', 
 			data: "payload={{payload|safe|urlencode}}", 
 			update:$('speak')
-		}).request();	
+		}).request();	*/
 	new Ajax(
 		"/dman/context/", 
 		{
 			method: 'get',  
-			update:$('context')
+			update: $('context')
 		}).request();
 	</script>
 	{% endif %}

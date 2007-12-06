@@ -1,0 +1,95 @@
+0	[<s>]	sil
+1	[</s>]	sil
+2	[GRANDFATHER]	g r ae n d f aa dh er
+2	[GRANDMOTHER]	g r ae n d m ah dh er
+2	[GRANDSON]	g r ae n d s ah n
+2	[GRANDDAUGHTER]	g r ae n d ao t er
+2	[GRANDCHILD]	g r ae n ch ay l d
+2	[GRANDCHILDREN]	g r ae n d ch ih l d r ih n
+3	[MOTHER]	m ah dh er
+3	[FATHER]	f aa dh er
+3	[DAUGHTER]	d ao t er
+3	[DAUGHTERS]	d ao t er z
+3	[SON]	s ah n
+3	[SONS]	s ah n z
+3	[CHILD]	ch ay l d
+3	[CHILDREN]	ch ih l d r ax n
+3	[SISTER]	s ih s t er
+3	[SISTERS]	s ih s t er z
+3	[BROTHER]	b r ah dh er
+3	[BROTHERS]	b r ah dh er z
+3	[NIECE]	n iy s
+3	[COUSIN]	k ah z ih n
+3	[UNCLE]	ah ng k ax l
+3	[AUNT]	ae n t
+3	[WIFE]	w ay f
+3	[WIVES]	w ay v z
+3	[HUSBAND]	hh ah z b ax n d
+3	[HUSBANDS]	hh ah z b ax n d z
+4	[GREAT]	g r ey t
+5	[HIS]	hh ih z
+5	[HIM]	hh ih m
+5	[HER]	hh er
+5	[HERS]	hh er z
+5	[THEY]	dh ey
+5	[THEIR]	dh ey r
+5	[THEM]	dh eh m
+5	[ADAM]	ae d ax m
+5	[EVE]	iy v
+5	[ABEL]	ey b ax l
+5	[ABRAHAM]	ey b r ax hh ae m
+5	[ABRAHAMS]	ey b r ax hh ae m z
+5	[ARAM]	ey r ah m
+5	[ARPHAZAHAD]	aa r f ae k s ax hh ae d
+5	[ASSHURS]	ae sh er z
+5	[CAIN]	k ey n
+5	[CAINS]	k ey n z
+5	[CAINAN]	k ey n ae n
+5	[CONCUBINE]	k aa n y uw b ay n
+5	[EBER]	eh b er
+5	[ELAM]	iy l ae m
+5	[ELAMS]	iy l ae m z
+5	[ENOS]	iy ax s
+5	[ESAU]	iy s ao
+5	[FAMILYBOT]	f ae m ax l iy b aa t
+5	[ISHBAK]	ih sh b ae k
+5	[ISHMAEL]	ih sh m ey l
+5	[ISSAC]	ay z ih k
+5	[ISSACS]	ay z ih k z
+5	[JACOB]	jh ey k ax b
+5	[JAREDS]	jh ih r eh d
+5	[JEPHETHS]	jh ey f eh th
+5	[JOKSHAN]	jh aa k sh ae m
+5	[JOKTAN]	jh aa k t ae n
+5	[KETURAH]	k eh t er ax hh
+5	[LABAN]	l ae b ax n
+5	[LEAH]	l iy ax hh
+5	[LUD]	l ah d
+5	[LUDS]	l ah d z
+5	[MAHALALEEL]	m ah hh ae l ae l iy l
+5	[MEDAN]	m eh d ae n
+5	[MIDIAN]	m ih d iy ih n
+5	[NAHOR]	n ey hh ow r
+5	[NOAH]	n ow ax
+5	[PELEG]	p eh l eh g
+5	[RACHAEL]	r ey ch ax l
+5	[RACHEL]	r ey ch ax l
+5	[REBEKAH]	r ax b eh k ax
+5	[REU]	r ey uw
+5	[RUTHS]	r uw th z
+5	[SALAH]	s ae l ae d
+5	[SARA]	s ae r ax
+5	[SERUG]	s ae r ah g
+5	[SETH]	s eh th
+5	[SHAM]	sh ae m
+5	[SHEM]	sh eh m
+5	[SHUAH]	sh uw ax
+5	[TERAH]	t eh r ax
+5	[ZIMRAM]	z ih m r ae m
+6	[THE]	dh ah
+7	[WHO]	hh uw
+8	[OF]	ah v
+9	[IS]	ih z
+9	[ARE]	aa r
+9	[WAS]	w ah z
+9	[BE]	b iy
