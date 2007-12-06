@@ -19,24 +19,50 @@ def _processTemplate(templateName, response):
 	based on the name of the relationship queried.
 	Next, we generate the graphviz output for our request.
 	"""
-	textOutput = render_to_string(templateName, {"response":response[0]})
-	graphvizOutput = _graphvizBuild(response)
+	#build up dictionaries of our request data
+	context = response[1]
+	main = response[0]
+	contextNodes = dict([(x['id'], x) for x in context["result"]])
+	mainNodes = dict([(x['id'], x) for x in main["result"]])
+	templateNodes = _mergeContext(contextNodes,mainNodes)
+	textOutput = render_to_string(templateName, {"main":mainNodes, "context":contextNodes})
+	#clean up text output
+	textOutput = textOutput.replace("\n", "").replace("\t","")
+	voiceOutput = _voiceOutput(textOutput)
+	graphvizOutput = _graphvizBuild(context, main, contextNodes, mainNodes)
 	#graphvizOutput = render_to_string(templateName+".dot", {"response":response})
-	htmlTemplateData = {"stringOutput":textOutput.strip(), "graph":graphvizOutput}
+	htmlTemplateData = {"stringOutput":textOutput, "graph":graphvizOutput}
 	return render_to_response("output.html", {"data":htmlTemplateData})
 	
-def _graphvizBuild(response):
+
+def _voiceOutput(textOutput):
+	"""
+	Generates voice output locally on the system. As of now, this is system dependent
+	and requires OS X. It works with both tiger (10.4) and leopard (10.5), but sounds
+	much better with leopard and the new "alex" voice
+	"""
+	print "Saying voice output: " + textOutput
+	commands.getstatusoutput('say "%s"' % (textOutput))
+	
+
+def _mergeContext(contextNodes, mainNodes):
+	"""
+	Takes the context nodes (which contain detailed information about each person) and 
+	the main nodes, which contains just the result of the query with IDs, to be looked 
+	up in the context, and populates it with the necessary data for the text based
+	template matching
+	"""
+
+	#	for node in mainNodes["subject"].iteritems()
+	pass
+	
+def _graphvizBuild(context, main, contextNodes, mainNodes):
 	"""
 	Generates a graphviz template string for our request
 	It will fill out a graph of the entirety of the request, but color in the referenced
 	nodes a certain color based on the relationship
 	"""
-	context = response[1]
-	main = response[0]
-	contextNodes = dict([(x['id'], x) for x in context["result"]])
-	mainNodes = dict([(x['id'], x) for x in main["result"]])
 	graphvizString = "digraph " + context["action"] +	" {\n"
-
 	for node in context["result"]:
 		# build the style definition for the current node
 		if mainNodes.get(node["id"]) == None:

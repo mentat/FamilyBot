@@ -1,4 +1,4 @@
-{{response.subject.title}} has the child{{response.result|length|pluralize:"ren"}}:
+{{main.subject.1}} has the child{{main.result|length|pluralize:"ren"}}:
  	{% ifequal response.result|length 1 %}
 		{{child.title}}
 	{% endifequal %}
